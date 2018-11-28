@@ -1,7 +1,8 @@
 # miniprogram-router
 
 小程序无线路由 and demo。
-具体实现方案参考自 (https://segmentfault.com/a/1190000016440273)，但是方案中提供的开源项目项目功能太多，并且使用框架不同，于是自己实现了一个只带有无限路由的功能的 demo。
+具体实现方案参考自 (https://segmentfault.com/a/1190000016440273)
+但是方案中提供的开源项目项目功能太多，并且使用框架不同，于是自己实现了一个只带有无限路由的功能的 demo。
 
 # 策略
 
@@ -42,7 +43,7 @@
 
 ## 使用 app.routerPage 代替 wx.navigateTo、wx.redirectTo 等用法
 
-``` js
+```js
 // method 默认为 navigateTo、wx
 app.routerPage({
   // method: 'redirectTo',
@@ -52,7 +53,7 @@ app.routerPage({
 
 - 使用 basePage 代替 Page
 
-``` js
+```js
 //index.js
 //获取应用实例
 const app = getApp();
@@ -69,13 +70,11 @@ basePage.call(this, {
 });
 ```
 
-## basePgage 会混合默认的页面参数和用户定义的参数。当用户定义了默认参数里的同名参数时（函数），会优先调用默认的回到函数，然后再调用用户定义的回调函数
+basePgage 会混合默认的页面参数和用户定义的参数。当用户定义了默认参数里的同名参数时（函数），会优先调用默认的回到函数，然后再调用用户定义的回调函数
+混合参数中定义了 onLoad 回调函数。该回调函数会在适当的时候（返回页面并且此时页面栈长度大于微信定义的 10 层时）把缓存的 data 数据吐到页面上。
+页面中的初始化数据建议写在 initData 函数上
 
-## 混合参数中定义了 onLoad 回调函数。该回调函数会在适当的时候（返回页面并且此时页面栈长度大于微信定义的 10 层时）把缓存的 data 数据吐到页面上。
-
-## 页面中的初始化数据建议写在 initData 函数上
-
-``` js
+```js
 ## basePgage 中的默认参数 onLoad
 onLoad(options) {
   if (options && options._cached) {
@@ -85,26 +84,26 @@ onLoad(options) {
   }
 }
 ```
-``` js
+
+```js
 //index.js
 //获取应用实例
-const app = getApp()
-import { basePage } from '../../utils/basePage.js'
+const app = getApp();
+import { basePage } from '../../utils/basePage.js';
 basePage.call(this, {
-	data: {
-		motto: '3 World',
-		load: false,
-	},
-	initData () {
-		this.setData({
-			load: true
-		})
-	},
-	newPage(e) {
-		app.routerPage({
-			url: '/pages/4/index'
-		})
-	}
-})
-
+  data: {
+    motto: '3 World',
+    load: false,
+  },
+  initData() {
+    this.setData({
+      load: true,
+    });
+  },
+  newPage(e) {
+    app.routerPage({
+      url: '/pages/4/index',
+    });
+  },
+});
 ```
