@@ -1,0 +1,4 @@
+<!--components/navigator.wxml-->
+<view class="navigator flex" style="height: {{ navigatorH }}px;line-height: {{ navigatorH }}px;margin-top: {{ statusBarHeight }}px;">
+	<view class="icon icon-back back-btn" bind:tap="back" hidden="{{ !router.pages.length }}"></view>
+</view>
